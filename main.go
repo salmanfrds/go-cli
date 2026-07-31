@@ -1,4 +1,4 @@
-// WORKSHOP GUIDE: follow the STEP 1-7 comments in order, starting in main() below.
+// WORKSHOP GUIDE: follow the STEP 1-8 comments in order, starting with the struct below.
 package main
 
 import (
@@ -8,6 +8,7 @@ import (
 	"strconv"
 )
 
+// STEP 1 — the Task model: every task is just an ID, a title, and a done flag.
 type Task struct {
 	ID    int    `json:"id"`
 	Title string `json:"title"`
@@ -16,7 +17,7 @@ type Task struct {
 
 const fileName = "tasks.json"
 
-// STEP 1: entry point — loads tasks, routes the subcommand, then saves.
+// STEP 2: entry point — loads tasks, routes the subcommand, then saves.
 func main() {
 	tasks := loadTasks()
 
@@ -65,7 +66,7 @@ func main() {
 	saveTasks(tasks)
 }
 
-// STEP 2 — CREATE: builds a new Task and appends it to the slice.
+// STEP 3 — CREATE: builds a new Task and appends it to the slice.
 func addTask(tasks []Task, title string) []Task {
 	task := Task{ID: len(tasks) + 1, Title: title, Done: false}
 	tasks = append(tasks, task)
@@ -73,7 +74,7 @@ func addTask(tasks []Task, title string) []Task {
 	return tasks
 }
 
-// STEP 3 — READ: prints every task with a checkbox-style status marker.
+// STEP 4 — READ: prints every task with a checkbox-style status marker.
 func listTasks(tasks []Task) {
 	if len(tasks) == 0 {
 		fmt.Println("No tasks yet.")
@@ -88,7 +89,7 @@ func listTasks(tasks []Task) {
 	}
 }
 
-// STEP 4 — UPDATE: finds the task by ID and flips Done to true.
+// STEP 5 — UPDATE: finds the task by ID and flips Done to true.
 func completeTask(tasks []Task, id int) []Task {
 	for i := range tasks {
 		if tasks[i].ID == id {
@@ -101,7 +102,7 @@ func completeTask(tasks []Task, id int) []Task {
 	return tasks
 }
 
-// STEP 5 — DELETE: removes the task at index i by slicing around it.
+// STEP 6 — DELETE: removes the task at index i by slicing around it.
 func deleteTask(tasks []Task, id int) []Task {
 	for i, t := range tasks {
 		if t.ID == id {
@@ -114,7 +115,7 @@ func deleteTask(tasks []Task, id int) []Task {
 	return tasks
 }
 
-// STEP 6 — PERSISTENCE: loadTasks reads tasks.json, saveTasks writes it back.
+// STEP 7 — PERSISTENCE: loadTasks reads tasks.json, saveTasks writes it back.
 func loadTasks() []Task {
 	data, err := os.ReadFile(fileName)
 	if err != nil {
@@ -130,7 +131,7 @@ func saveTasks(tasks []Task) {
 	os.WriteFile(fileName, data, 0644)
 }
 
-// STEP 7 — printed when no command (or an unrecognized one) is given.
+// STEP 8 — printed when no command (or an unrecognized one) is given.
 func printUsage() {
 	fmt.Println("Usage:")
 	fmt.Println("  go run . add \"task title\"")
