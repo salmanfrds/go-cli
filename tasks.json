@@ -3,20 +3,5 @@
     "id": 1,
     "title": "work",
     "done": true
-  },
-  {
-    "id": 2,
-    "title": "yada yada",
-    "done": false
-  },
-  {
-    "id": 3,
-    "title": "buy milk",
-    "done": true
-  },
-  {
-    "id": 4,
-    "title": "homework",
-    "done": false
   }
 ]
