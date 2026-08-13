@@ -2,66 +2,23 @@
 package main
 
 import (
-	"encoding/json"
+	// "encoding/json"
 	"fmt"
-	"os"
-	"strconv"
+	// "os"
+	// "strconv"
 )
 
 // STEP 1 — the Task model: every task is just an ID, a title, and a done flag.
+// TODO: add ID (int), Title (string), and Done (bool) fields with json tags.
 type Task struct {
-	ID    int    `json:"id"`
-	Title string `json:"title"`
-	Done  bool   `json:"done"`
+
 }
 
 // STEP 2: entry point — loads tasks, routes the subcommand, then saves.
+// TODO: load tasks, check os.Args, switch on os.Args[1] for "add"/"list"/"done"/"delete",
+// call the matching helper below, then save tasks before returning.
 func main() {
-	tasks := loadTasks()
 
-	if len(os.Args) < 2 {
-		printUsage()
-		return
-	}
-
-	switch os.Args[1] {
-
-	// List Command
-	case "list":
-		listTasks(tasks)
-
-	// Add Command
-	case "add":
-		if len(os.Args) < 3 {
-			fmt.Println("Usage: go run . add \"task title\"")
-			return
-		}
-		tasks = addTask(tasks, os.Args[2])
-
-	// Mark as Done Command
-	case "done":
-		id, err := strconv.Atoi(os.Args[2])
-		if err != nil {
-			fmt.Println("Invalid task ID")
-			return
-		}
-		tasks = completeTask(tasks, id)
-
-	// Delete Command
-	case "delete":
-		id, err := strconv.Atoi(os.Args[2])
-		if err != nil {
-			fmt.Println("Invalid task ID")
-			return
-		}
-		tasks = deleteTask(tasks, id)
-
-	default:
-		printUsage()
-		return
-	}
-
-	saveTasks(tasks)
 }
 
 // STEP 3 — printed when no command (or an unrecognized one) is given.
@@ -73,68 +30,38 @@ func printUsage() {
 	fmt.Println("  go run . delete <id>")
 }
 
-// STEP 4 — PERSISTENCE: loadTasks reads tasks.json,
+// STEP 4 — PERSISTENCE: loadTasks reads tasks.json.
+// TODO: read tasks.json, unmarshal into []Task (return empty slice on error).
 func loadTasks() []Task {
-	data, err := os.ReadFile("tasks.json")
-	if err != nil {
-		return []Task{}
-	}
-	var tasks []Task
-	json.Unmarshal(data, &tasks)
-	return tasks
+	return []Task{}
 }
 
 // STEP 5 — READ: prints every task with a checkbox-style status marker.
+// TODO: loop over tasks and print each one's status, ID, and title.
 func listTasks(tasks []Task) {
-	if len(tasks) == 0 {
-		fmt.Println("No tasks yet.")
-		return
-	}
-	for _, t := range tasks {
-		status := " "
-		if t.Done {
-			status = "x"
-		}
-		fmt.Printf("[%s] %d. %s\n", status, t.ID, t.Title)
-	}
+
 }
 
 // STEP 6 — CREATE: builds a new Task and appends it to the slice.
+// TODO: construct a Task from title, append it, print confirmation, return tasks.
 func addTask(tasks []Task, title string) []Task {
-	task := Task{ID: len(tasks) + 1, Title: title, Done: false}
-	tasks = append(tasks, task)
-	fmt.Println("Added:", title)
 	return tasks
 }
 
 // STEP 7 — PERSISTENCE: saveTasks writes the tasks slice to tasks.json.
+// TODO: marshal tasks to indented JSON and write it to tasks.json with 0644 permissions.
 func saveTasks(tasks []Task) {
-	data, _ := json.MarshalIndent(tasks, "", "  ")
-	os.WriteFile("tasks.json", data, 0644)
+
 }
 
 // STEP 8 — UPDATE: finds the task by ID and flips Done to true.
+// TODO: find the task with matching ID, set Done = true, print confirmation.
 func completeTask(tasks []Task, id int) []Task {
-	for i := range tasks {
-		if tasks[i].ID == id {
-			tasks[i].Done = true
-			fmt.Println("Completed:", tasks[i].Title)
-			return tasks
-		}
-	}
-	fmt.Println("Task not found")
 	return tasks
 }
 
 // STEP 9 — DELETE: removes the task at index i by slicing around it.
+// TODO: find the task with matching ID and remove it from the slice.
 func deleteTask(tasks []Task, id int) []Task {
-	for i, t := range tasks {
-		if t.ID == id {
-			tasks = append(tasks[:i], tasks[i+1:]...)
-			fmt.Println("Deleted:", t.Title)
-			return tasks
-		}
-	}
-	fmt.Println("Task not found")
 	return tasks
 }
