@@ -2,20 +2,16 @@
 package main
 
 import (
-	// "encoding/json"
 	"fmt"
-	// "os"
-	// "strconv"
 )
 
 // STEP 1 — the Task model: every task is just an ID, a title, and a done flag.
 type Task struct {
-
 }
 
 // STEP 2: entry point — loads tasks, routes the subcommand, then saves.
 func main() {
-
+	fmt.Println("Hello")
 }
 
 // STEP 3 — printed when no command (or an unrecognized one) is given.
