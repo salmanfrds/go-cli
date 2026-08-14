@@ -1,0 +1,6 @@
+# Binaries
+*.exe
+task
+
+# Local state
+tasks.json
