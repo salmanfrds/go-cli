@@ -14,7 +14,7 @@ go version
 
 ## Getting started
 
-Clone the repo and run the app directly — no manual build step needed:
+Clone the repo and run the app directly — **no build step required**:
 
 ```bash
 git clone <this-repo-url>
@@ -22,7 +22,7 @@ cd <this-repo-folder>
 go run . list
 ```
 
-`go run .` compiles and runs the app on the fly, so this works identically across macOS, Linux, and Windows.
+> 💡 `go run .` automatically detects your operating system and works identically on **macOS**, **Linux**, and **Windows**.
 
 ---
 
@@ -66,70 +66,37 @@ go run .
 
 ---
 
-## Building a Binary (OS-Specific Guide)
+## Building a Binary (Optional)
 
-If you prefer executing a compiled binary instead of typing `go run .` every time, follow the instructions for your operating system:
+If you prefer running a pre-compiled binary instead of `go run .`:
 
-###  macOS & 🐧 Linux (Terminal / Bash / Zsh)
+###  macOS & 🐧 Linux
+```bash
+go build -o task .
+./task list
+```
 
-1. Build the executable binary:
-   ```bash
-   go build -o task .
-   ```
-2. Run the binary:
-   ```bash
-   ./task list
-   ./task add "New task"
-   ./task done 1
-   ```
+### 🪟 Windows (PowerShell / Command Prompt)
+```powershell
+go build -o task.exe .
+.\task.exe list
+```
 
-### 🪟 Windows (Command Prompt / PowerShell)
-
-1. Build the `.exe` executable binary:
-   - **PowerShell / CMD**:
-     ```powershell
-     go build -o task.exe .
-     ```
-2. Run the binary:
-   - **PowerShell**:
-     ```powershell
-     .\task.exe list
-     .\task.exe add "New task"
-     .\task.exe done 1
-     ```
-   - **Command Prompt (CMD)**:
-     ```cmd
-     task.exe list
-     task.exe add "New task"
-     task.exe done 1
-     ```
+> **Note:** Standard `go build` automatically detects your current operating system and builds the correct binary for your machine. You do **not** need to set any extra environment variables!
 
 ---
 
-## Cross-Compiling for Other Operating Systems
+## Optional: Cross-Compiling for Another OS
 
-Go makes it effortless to build binaries for other operating systems from any platform:
+Go allows you to build binaries for *other* operating systems (e.g. building a Windows `.exe` while working on macOS):
 
-* **Build for Windows (from macOS/Linux):**
-  ```bash
-  GOOS=windows GOARCH=amd64 go build -o task.exe .
-  ```
+```bash
+# Build for Windows from macOS/Linux:
+GOOS=windows GOARCH=amd64 go build -o task.exe .
 
-* **Build for Linux (from macOS/Windows):**
-  - macOS/Linux (Bash/Zsh):
-    ```bash
-    GOOS=linux GOARCH=amd64 go build -o task .
-    ```
-  - Windows (PowerShell):
-    ```powershell
-    $env:GOOS="linux"; $env:GOARCH="amd64"; go build -o task .
-    ```
-
-* **Build for macOS (from Windows/Linux):**
-  - Windows (PowerShell):
-    ```powershell
-    $env:GOOS="darwin"; $env:GOARCH="arm64"; go build -o task .
-    ```
+# Build for Linux from macOS/Windows:
+GOOS=linux GOARCH=amd64 go build -o task .
+```
 
 ---
 
